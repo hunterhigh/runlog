@@ -1,0 +1,8 @@
+{
+  "id": "code-review",
+  "kind": "skill",
+  "display_name": "Code Review",
+  "source_root": "examples/sources/skills/code-review",
+  "owner": "raozhiheng",
+  "notes": "Governed skill declaration for runtime attribution."
+}

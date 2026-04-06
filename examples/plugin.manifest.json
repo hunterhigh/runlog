@@ -1,0 +1,8 @@
+{
+  "id": "github",
+  "kind": "plugin",
+  "display_name": "GitHub Connector",
+  "source_root": "examples/sources/plugins/github",
+  "owner": "raozhiheng",
+  "notes": "Governed plugin declaration for runtime attribution."
+}

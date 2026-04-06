@@ -1,0 +1,7 @@
+{
+  "name": "github",
+  "capabilities": [
+    "fetch_pr_patch",
+    "list_pr_changed_filenames"
+  ]
+}

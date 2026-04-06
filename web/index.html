@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Codex Skill Governance Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar__title">
+          <h1 id="app-title">Codex Governance Console</h1>
+          <p id="app-subtitle">Versioned skill and plugin runtime ledger</p>
+        </div>
+        <div class="topbar__controls">
+          <label class="control">
+            <span id="language-label">Language</span>
+            <select id="language-select">
+              <option value="en">English</option>
+              <option value="zh-CN">中文</option>
+            </select>
+          </label>
+          <label class="control">
+            <span id="ledger-preset-label">Ledger</span>
+            <select id="ledger-preset">
+              <option value="default">Default</option>
+              <option value="nested">Nested demo</option>
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+          <label class="control control--wide" id="custom-ledger-wrap" hidden>
+            <span id="custom-ledger-label">Custom ledger path</span>
+            <input
+              id="custom-ledger-input"
+              type="text"
+              placeholder="../data/nested-runtime-events.jsonl"
+            />
+          </label>
+          <button id="apply-ledger" type="button">Load</button>
+        </div>
+      </header>
+
+      <section class="statusbar">
+        <div class="statusbar__item">
+          <span id="status-label">Status</span>
+          <strong class="status-inline">
+            <span id="loading-spinner" class="spinner" aria-hidden="true"></span>
+            <span id="ledger-status">Loading</span>
+          </strong>
+        </div>
+        <div class="statusbar__item">
+          <span id="source-label">Source</span>
+          <strong id="ledger-source">Resolving</strong>
+        </div>
+        <div class="statusbar__item">
+          <span id="updated-label">Latest event</span>
+          <strong id="last-updated">Waiting for data</strong>
+        </div>
+      </section>
+
+      <main class="dashboard">
+        <section class="panel">
+          <div class="panel__header">
+            <h2 id="summary-title">Summary</h2>
+          </div>
+          <div class="metric-grid" id="metrics"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__header">
+            <h2 id="overview-title">Overview</h2>
+          </div>
+          <div class="overview-grid">
+            <div class="subpanel">
+              <div class="subpanel__header">
+                <h3 id="top-skills-title">Top skills</h3>
+                <span id="skill-count"></span>
+              </div>
+              <div id="skills-list" class="stack"></div>
+            </div>
+            <div class="subpanel">
+              <div class="subpanel__header">
+                <h3 id="top-plugins-title">Top plugins</h3>
+                <span id="plugin-count"></span>
+              </div>
+              <div id="plugins-list" class="stack"></div>
+            </div>
+            <div class="subpanel">
+              <div class="subpanel__header">
+                <h3 id="recent-failures-title">Recent failures</h3>
+                <span id="failure-count"></span>
+              </div>
+              <div id="failures-list" class="stack"></div>
+            </div>
+            <div class="subpanel">
+              <div class="subpanel__header">
+                <h3 id="observed-versions-title">Observed versions</h3>
+                <span id="version-count"></span>
+              </div>
+              <div id="versions-list" class="stack"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel--span-2">
+          <div class="panel__header">
+            <h2 id="invocation-title">Invocation ledger</h2>
+            <div class="filter-row">
+              <label class="control">
+                <span id="skill-filter-label">Skill</span>
+                <select id="skill-filter">
+                  <option value="">All</option>
+                </select>
+              </label>
+              <label class="control">
+                <span id="outcome-filter-label">Outcome</span>
+                <select id="outcome-filter">
+                  <option value="">All</option>
+                  <option value="success">Success</option>
+                  <option value="failure">Failure</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="degraded">Degraded</option>
+                </select>
+              </label>
+              <label class="control">
+                <span id="trigger-filter-label">Trigger</span>
+                <select id="trigger-filter">
+                  <option value="">All</option>
+                  <option value="explicit">Explicit</option>
+                  <option value="keyword">Keyword</option>
+                  <option value="autonomous">Autonomous</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="split-view">
+            <div id="invocation-list" class="list-panel"></div>
+            <aside id="invocation-detail" class="detail-panel"></aside>
+          </div>
+        </section>
+
+        <section class="panel panel--span-2">
+          <div class="panel__header">
+            <h2 id="objects-title">Governed objects</h2>
+            <div class="filter-row">
+              <label class="control">
+                <span id="object-kind-label">Kind</span>
+                <select id="object-kind-filter">
+                  <option value="">All</option>
+                  <option value="skill">Skill</option>
+                  <option value="plugin">Plugin</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="split-view">
+            <div id="object-list" class="list-panel"></div>
+            <aside id="object-detail" class="detail-panel"></aside>
+          </div>
+        </section>
+
+        <section class="panel panel--span-2">
+          <div class="panel__header">
+            <h2 id="compare-title">Version compare</h2>
+            <div class="filter-row">
+              <label class="control">
+                <span id="compare-object-label">Object</span>
+                <select id="compare-object-filter">
+                  <option value="">Select</option>
+                </select>
+              </label>
+              <label class="control">
+                <span id="compare-left-label">Base</span>
+                <select id="compare-left-filter">
+                  <option value="">Select</option>
+                </select>
+              </label>
+              <label class="control">
+                <span id="compare-right-label">Target</span>
+                <select id="compare-right-filter">
+                  <option value="">Select</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div id="compare-panel" class="compare-panel"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="stack-item-template">
+      <article class="stack-item">
+        <div>
+          <strong></strong>
+          <p></p>
+        </div>
+        <span></span>
+      </article>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

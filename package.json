@@ -1,0 +1,9 @@
+{
+  "name": "codex-skill-governance-console",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 4173",
+    "sync:registry": "node adapter/cli.js sync-registry --manifest examples/skill.manifest.json --manifest examples/plugin.manifest.json"
+  }
+}

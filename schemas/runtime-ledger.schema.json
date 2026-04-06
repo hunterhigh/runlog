@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.codex/schemas/runtime-ledger.schema.json",
+  "title": "Runtime Ledger Event",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/skillInvocationStarted"
+    },
+    {
+      "$ref": "#/$defs/skillInvocationCompleted"
+    },
+    {
+      "$ref": "#/$defs/pluginInvocationStarted"
+    },
+    {
+      "$ref": "#/$defs/pluginInvocationCompleted"
+    }
+  ],
+  "$defs": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "triggerType": {
+      "type": "string",
+      "enum": [
+        "explicit",
+        "keyword",
+        "autonomous"
+      ]
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure",
+        "cancelled",
+        "degraded"
+      ]
+    },
+    "evidencePointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "file",
+            "command",
+            "log",
+            "artifact",
+            "note"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "skillInvocationStarted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "occurred_at",
+        "skill_invocation_id",
+        "skill_id",
+        "skill_version_hash",
+        "trigger_type",
+        "session_id",
+        "input_summary"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "skill_invocation_started"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "skill_invocation_id": {
+          "type": "string"
+        },
+        "skill_id": {
+          "type": "string"
+        },
+        "skill_version_hash": {
+          "type": "string"
+        },
+        "trigger_type": {
+          "$ref": "#/$defs/triggerType"
+        },
+        "session_id": {
+          "type": "string"
+        },
+        "task_id": {
+          "type": "string"
+        },
+        "project_id": {
+          "type": "string"
+        },
+        "actor_id": {
+          "type": "string"
+        },
+        "input_summary": {
+          "type": "string"
+        }
+      }
+    },
+    "skillInvocationCompleted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "occurred_at",
+        "skill_invocation_id",
+        "skill_id",
+        "skill_version_hash",
+        "outcome"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "skill_invocation_completed"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "skill_invocation_id": {
+          "type": "string"
+        },
+        "skill_id": {
+          "type": "string"
+        },
+        "skill_version_hash": {
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "error_summary": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidencePointer"
+          }
+        }
+      }
+    },
+    "pluginInvocationStarted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "occurred_at",
+        "plugin_invocation_id",
+        "skill_invocation_id",
+        "plugin_id",
+        "plugin_version_hash",
+        "action_name"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "plugin_invocation_started"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "plugin_invocation_id": {
+          "type": "string"
+        },
+        "skill_invocation_id": {
+          "type": "string"
+        },
+        "plugin_id": {
+          "type": "string"
+        },
+        "plugin_version_hash": {
+          "type": "string"
+        },
+        "action_name": {
+          "type": "string"
+        }
+      }
+    },
+    "pluginInvocationCompleted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_type",
+        "occurred_at",
+        "plugin_invocation_id",
+        "skill_invocation_id",
+        "plugin_id",
+        "plugin_version_hash",
+        "action_name",
+        "outcome"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "plugin_invocation_completed"
+        },
+        "occurred_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "plugin_invocation_id": {
+          "type": "string"
+        },
+        "skill_invocation_id": {
+          "type": "string"
+        },
+        "plugin_id": {
+          "type": "string"
+        },
+        "plugin_version_hash": {
+          "type": "string"
+        },
+        "action_name": {
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "error_summary": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

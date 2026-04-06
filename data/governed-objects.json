@@ -1,0 +1,18 @@
+[
+  {
+    "id": "code-review",
+    "kind": "skill",
+    "display_name": "Code Review",
+    "source_root": "examples/sources/skills/code-review",
+    "owner": "raozhiheng",
+    "notes": "Governed skill declaration for runtime attribution."
+  },
+  {
+    "id": "github",
+    "kind": "plugin",
+    "display_name": "GitHub Connector",
+    "source_root": "examples/sources/plugins/github",
+    "owner": "raozhiheng",
+    "notes": "Governed plugin declaration for runtime attribution."
+  }
+]
