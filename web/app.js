@@ -18,7 +18,7 @@ const languageOverride = params.get("lang");
 
 const translations = {
   en: {
-    appTitle: "Codex Governance Console",
+    appTitle: "Runlog",
     appSubtitle: "Versioned skill and plugin runtime ledger",
     languageLabel: "Language",
     ledgerPresetLabel: "Ledger",
@@ -123,7 +123,7 @@ const translations = {
     sourceLoadHelp: "Unable to load local data. Serve the repository root over HTTP, for example: python3 -m http.server 4173",
   },
   "zh-CN": {
-    appTitle: "Codex 治理控制台",
+    appTitle: "Runlog",
     appSubtitle: "带版本的 skill / plugin 运行账本",
     languageLabel: "语言",
     ledgerPresetLabel: "账本",
